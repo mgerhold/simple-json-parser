@@ -311,7 +311,7 @@ namespace c2k::json::detail {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
-                return (std::is_signed_v<decltype(c)> and c >= 0) or (std::is_unsigned_v<decltype(c)> and c <= 127);
+                return c >= 0 and c <= 127;
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif
