@@ -308,8 +308,19 @@ namespace c2k::json::detail {
         }
 
         [[nodiscard]] std::expected<char, Error> hex() {
+            static constexpr auto is_ascii = [](char const c) {
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
+#endif
+                return (std::is_signed_v<decltype(c)> and c >= 0) or (std::is_unsigned_v<decltype(c)> and c <= 127);
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+            };
+
             auto const c = current().as_string_view().front();
-            if (c < 0 or c > 127 or not std::isxdigit(static_cast<unsigned char>(c))) {
+            if (not is_ascii(c) or not std::isxdigit(static_cast<unsigned char>(c))) {
                 return std::unexpected{ ParseError{ "invalid hex digit" } };
             }
             advance();
