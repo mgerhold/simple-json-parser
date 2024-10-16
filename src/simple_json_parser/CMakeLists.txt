@@ -1,0 +1,24 @@
+add_library(simple_json_parser
+        include/simple_json_parser/simple_json_parser.hpp
+        simple_json_parser.cpp
+        include/simple_json_parser/detail/value.hpp
+        include/simple_json_parser/detail/null.hpp
+        include/simple_json_parser/detail/boolean.hpp
+        include/simple_json_parser/detail/number.hpp
+        include/simple_json_parser/detail/string.hpp
+        include/simple_json_parser/detail/array.hpp
+        include/simple_json_parser/detail/object.hpp
+        include/simple_json_parser/detail/errors.hpp
+        include/simple_json_parser/detail/parser.hpp
+        parser.cpp
+)
+target_include_directories(simple_json_parser PUBLIC include)
+target_link_libraries(simple_json_parser
+        PRIVATE
+        simple_json_parser_project_options
+)
+target_link_system_libraries(simple_json_parser
+        PUBLIC
+        tl::optional
+        lib2k
+)
