@@ -77,8 +77,7 @@ int main() {
     }
 ]
 )"_utf8;
-    auto const json = parse(input);
-    if (json.has_value()) {
+    if (auto const json = parse(input); json.has_value()) {
         std::println("{}", (*json)->pretty_print().c_str());
     } else {
         std::println(std::cerr, "Error: {}", std::visit([](auto const& error) { return error.message; }, json.error()));

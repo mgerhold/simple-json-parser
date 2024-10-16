@@ -4,7 +4,7 @@
 namespace c2k::json {
 
     [[nodiscard]] std::expected<ValuePointer, Error> parse(
-        Utf8StringView input,
+        Utf8StringView const input,
         tl::optional<std::filesystem::path const&>
     ) {
         auto parser = detail::Parser{ input };

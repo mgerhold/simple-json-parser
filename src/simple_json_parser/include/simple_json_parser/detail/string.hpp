@@ -5,7 +5,7 @@
 
 namespace c2k::json {
     struct String final : Value {
-        c2k::Utf8String value;
+        Utf8String value;
 
         String() = default;
 

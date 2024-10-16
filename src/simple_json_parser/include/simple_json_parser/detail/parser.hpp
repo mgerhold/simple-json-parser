@@ -119,7 +119,7 @@ namespace c2k::json::detail {
             if (not key_result.has_value()) {
                 return std::unexpected{ key_result.error() };
             }
-            auto key = std::move(key_result).value();
+            auto const key = std::move(key_result).value();
             auto key_string = std::move(dynamic_cast<String&>(*key));
             consume_whitespace();
             if (current() != ':') {
@@ -395,8 +395,7 @@ namespace c2k::json::detail {
                 conversion_buffer.push_back(c.as_string_view().front());
             }
             auto result = i64{};
-            auto const conversion_result =
-                std::from_chars(&*conversion_buffer.cbegin(), &*conversion_buffer.cend(), result);
+            auto const conversion_result = std::from_chars(&*conversion_buffer.cbegin(), &*conversion_buffer.cend(), result);
             if (conversion_result.ec != std::errc{} or conversion_result.ptr != &*conversion_buffer.cend()) {
                 return std::unexpected{ ParseError{ "integer out of range" } };
             }

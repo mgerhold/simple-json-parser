@@ -26,8 +26,8 @@ namespace c2k::json {
 
         [[nodiscard]] Utf8String format(usize, usize) const override {
             auto stream = std::ostringstream{};
-            double intpart_;
-            if (std::modf(value, &intpart_) == 0.0) {
+            double int_part;
+            if (std::modf(value, &int_part) == 0.0) {
                 // this is an integer
                 stream << std::fixed << std::setprecision(0) << value;
             } else {

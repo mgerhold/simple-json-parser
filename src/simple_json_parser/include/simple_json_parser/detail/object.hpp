@@ -24,7 +24,7 @@ namespace c2k::json {
             values.reserve(num_pairs);
             (values.emplace_back(std::forward<decltype(key_value_pairs)>(key_value_pairs)), ...);
             // todo: improve as soon as Utf8String is hashable (and can be used in std::unordered_set)
-            auto keys = std::vector<c2k::Utf8String>{};
+            auto keys = std::vector<Utf8String>{};
             for (auto const& key : values | std::views::keys) {
                 if (std::ranges::find(keys, key.value) != keys.end()) {
                     throw DuplicateKey{ key.value.c_str() };
@@ -55,7 +55,7 @@ namespace c2k::json {
                 return "{}"_utf8;
             }
 
-            auto result = c2k::Utf8String{};
+            auto result = Utf8String{};
             result += "{\n"_utf8;
             for (auto const& [i, key_value_pair] : std::views::enumerate(values)) {
                 auto const& [key, value] = key_value_pair;
