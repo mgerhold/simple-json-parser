@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <iomanip>
 #include <sstream>
 #include "value.hpp"
