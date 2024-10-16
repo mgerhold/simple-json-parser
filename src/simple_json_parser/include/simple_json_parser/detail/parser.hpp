@@ -49,9 +49,7 @@ namespace c2k::json::detail {
         }
 
         [[nodiscard]] std::expected<ValuePointer, Error> value() {
-            auto const c = current().as_string_view().front();
-
-            switch (c) {
+            switch (auto const c = current().as_string_view().front()) {
                 case '{':
                     return object();
                 case '[':
@@ -224,8 +222,7 @@ namespace c2k::json::detail {
             if (is_at_end_of_input()) {
                 return std::unexpected{ ParseError{ "unexpected end of input" } };
             }
-            auto const c = current().as_string_view().front();
-            switch (c) {
+            switch (auto const c = current().as_string_view().front()) {
                 case '"':
                 case '\\':
                 case '/':
