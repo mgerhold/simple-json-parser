@@ -74,6 +74,10 @@ int main() {
     {
         "\ud83e\udd80": "Rust",
         "\ud83d\udc00": "C++"
+    },
+    {
+        "first": 1,
+        "second": 2
     }
 ]
 )"_utf8;

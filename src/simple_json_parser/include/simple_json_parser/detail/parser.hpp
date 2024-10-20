@@ -90,6 +90,12 @@ namespace c2k::json::detail {
             if (auto const result = consume('}'); not result.has_value()) {
                 return std::unexpected{ result.error() };
             }
+            auto keys = std::unordered_set<Utf8StringView>{};
+            for (auto const& key : members | std::views::keys) {
+                if (auto&& [_, inserted] = keys.insert(key.value.view()); not inserted) {
+                    return std::unexpected{ ParseError{ std::format("Duplicate key: {}", key.value.c_str()) } };
+                }
+            }
             return std::make_unique<Object>(std::move(members));
         }
 
@@ -395,7 +401,8 @@ namespace c2k::json::detail {
                 conversion_buffer.push_back(c.as_string_view().front());
             }
             auto result = i64{};
-            auto const conversion_result = std::from_chars(&*conversion_buffer.cbegin(), &*conversion_buffer.cend(), result);
+            auto const conversion_result =
+                std::from_chars(&*conversion_buffer.cbegin(), &*conversion_buffer.cend(), result);
             if (conversion_result.ec != std::errc{} or conversion_result.ptr != &*conversion_buffer.cend()) {
                 return std::unexpected{ ParseError{ "integer out of range" } };
             }

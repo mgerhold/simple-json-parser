@@ -5,7 +5,7 @@ function(simple_json_parser_setup_dependencies)
     CPMAddPackage(
             NAME LIB2K
             GITHUB_REPOSITORY mgerhold/lib2k
-            VERSION 0.0.6
+            VERSION 0.1.0
             OPTIONS
             "BUILD_SHARED_LIBS OFF"
     )

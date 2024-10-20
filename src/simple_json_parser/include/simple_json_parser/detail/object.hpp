@@ -4,6 +4,7 @@
 #include <ranges>
 #include <stdexcept>
 #include <vector>
+#include <unordered_set>
 #include "string.hpp"
 #include "value.hpp"
 
@@ -24,12 +25,11 @@ namespace c2k::json {
             values.reserve(num_pairs);
             (values.emplace_back(std::forward<decltype(key_value_pairs)>(key_value_pairs)), ...);
             // todo: improve as soon as Utf8String is hashable (and can be used in std::unordered_set)
-            auto keys = std::vector<Utf8String>{};
+            auto keys = std::unordered_set<Utf8String>{};
             for (auto const& key : values | std::views::keys) {
-                if (std::ranges::find(keys, key.value) != keys.end()) {
+                if (auto&& [_, inserted] = keys.insert(key.value); not inserted) {
                     throw DuplicateKey{ key.value.c_str() };
                 }
-                keys.push_back(key.value);
             }
         }
 
